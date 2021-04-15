@@ -8,7 +8,7 @@ urlpatterns = [
         name='get_post_citys'
     ),
     path(
-        'street/',
+        'city/street/',
         views.get_post_street,
         name='get_post_street'
     ),
