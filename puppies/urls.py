@@ -3,10 +3,14 @@ from . import views
 
 urlpatterns = [
     path(
-       # 'api/v1/puppies/',
         'city/',
         views.get_post_citys,
         name='get_post_citys'
+    ),
+    path(
+        'street/',
+        views.get_post_street,
+        name='get_post_street'
     ),
     path(
         'city/(?<pk>[0-9]+)',

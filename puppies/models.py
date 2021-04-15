@@ -7,7 +7,13 @@ CITYS = (
     'Volgograd',
     'Tumbov',
     )
+STREETS = (
+    'Sudovaya-street',
+    'Nugibina-street',
+    'Pogodina-street',
+    )
 
+    
 class City(models.Model):
     name = models.CharField(max_length=30)
     

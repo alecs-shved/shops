@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import City, CITYS
+from .models import City, Street, CITYS, STREETS
 from .serializers import CitySerializer
+import random
 
 # Create your views here.
 @api_view(['GET', 'DELETE', 'PUT'])
@@ -28,8 +29,8 @@ def get_delete_update_city(request, pk):
 def get_post_citys(request):
     # get all city
     if request.method == 'GET':
-        puppies = City.objects.all()
-        serializer = CitySerializer(puppies, many=True)
+        citys = City.objects.all()
+        serializer = CitySerializer(citys, many=True)
         return Response(serializer.data)
     # insert a new record for a city
     elif request.method == 'POST':
@@ -38,3 +39,22 @@ def get_post_citys(request):
             city.name = cit
             city.save()
         return Response({'insert':'good'})
+
+@api_view(['GET', 'POST'])
+def get_post_street(request):
+    # get all street
+    if request.method == 'GET':
+        #streets = Street.objects.all()
+        #serializer = CitySerializer(streets, many=True)
+        return Response({'select':'good'})
+    # insert a new record for a city
+    elif request.method == 'POST':
+        citys = City.objects.all()
+        x = []
+        for streets in STREETS:
+            street = Street()
+            street.name = streets
+            street.city_id = citys[random.randrange(len(citys))].id
+            #x.append(citys[random.randrange(len(citys))].id)
+            street.save()
+        return Response({'insert': 'dood'})
