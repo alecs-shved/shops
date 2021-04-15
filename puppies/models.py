@@ -1,6 +1,13 @@
 from django.db import models
 
 # Create your models here.
+
+CITYS = (
+    'Roston-on-Don',
+    'Volgograd',
+    'Tumbov',
+    )
+
 class City(models.Model):
     name = models.CharField(max_length=30)
     

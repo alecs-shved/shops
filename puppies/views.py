@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import City
+from .models import City, CITYS
 from .serializers import CitySerializer
 
 # Create your views here.
@@ -12,16 +12,18 @@ def get_delete_update_city(request, pk):
         city = City.objects.get(pk=pk)
     except City.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
     # get details of a single puppy
     if request.method == 'GET':
-        return Response({})
+        return Response({'get':'well'})
     # delete a single puppy
     elif request.method == 'DELETE':
-        return Response({})
+        return Response({'del':'well'})
     # update details of a single puppy
     elif request.method == 'PUT':
-        return Response({})
-       
+        return Response({'put':'well'})
+
+
 @api_view(['GET', 'POST'])
 def get_post_citys(request):
     # get all city
@@ -31,7 +33,8 @@ def get_post_citys(request):
         return Response(serializer.data)
     # insert a new record for a city
     elif request.method == 'POST':
-        city = City()
-        city.name = "Rostov-on-Don"
-        city.save()
-        return Response({1:'well'})
+        for cit in CITYS:
+            city = City()
+            city.name = cit
+            city.save()
+        return Response({'insert':'good'})

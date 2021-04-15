@@ -3,13 +3,14 @@ from . import views
 
 urlpatterns = [
     path(
-        'api/v1/puppies/',
+       # 'api/v1/puppies/',
+        'city/',
         views.get_post_citys,
-        name='get_post_city'
+        name='get_post_citys'
     ),
     path(
-        'api/v1/puppies/(?<pk>[0-9]+)',
-        #'api/v1/puppies/(?P<pk>)',
+        'city/(?<pk>[0-9]+)',
+        #'api/v1/puppies/(?P<pk>[0-9]+)',
         views.get_delete_update_city,
         name='get_delete_update_city'
     ),
