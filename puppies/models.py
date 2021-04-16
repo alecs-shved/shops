@@ -36,13 +36,13 @@ class Shops(models.Model):
     city = models.IntegerField(default=0)
     street = models.ForeignKey(Street, on_delete = models.CASCADE)
     home = models.IntegerField(default=1)
-    date_open = models.CharField(max_length=15)
-    date_close = models.CharField(max_length=15)
+    time_open = models.CharField(max_length=15)
+    time_close = models.CharField(max_length=15)
 
 class Shops_all(models.Model):
     name = models.CharField(max_length=30)
     city = models.CharField(max_length=30)
     street = models.CharField(max_length=30)
     home = models.IntegerField(default=1)
-    date_open = models.CharField(max_length=15)
-    date_close = models.CharField(max_length=15)
+    time_open = models.CharField(max_length=15)
+    time_close = models.CharField(max_length=15)

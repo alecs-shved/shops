@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ..models import City, Street, Shops
 
+
 class CityTest(TestCase):
     """ Test module for City model """
 

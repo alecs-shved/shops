@@ -68,14 +68,13 @@ def get_post_shop(request):
         for sh in shopss:
             dic = {}
             dic['name'] = sh.name
-            #(Street.objects.get(id=sh.street_id)).city_id)
             dic['city'] = str((City.objects.get(id=sh.street_id)).name)
             dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
             dic['home'] = sh.home
-            dic['date_open'] = sh.date_open
-            dic['date_close'] = sh.date_close
+            dic['time_open'] = sh.time_open
+            dic['time_close'] = sh.time_close
             lis.append(dic)    
-        print(lis)
+        #print(lis)
         serializer = ShopsSerializer(lis, many=True)
         return Response(serializer.data)
     # insert a new record for a city
@@ -87,7 +86,7 @@ def get_post_shop(request):
             shop.street_id = streets[random.randrange(len(streets))].city_id
             shop.city = shop.street_id
             shop.home = random.randrange(29)
-            shop.date_open = '8:00'
-            shop.date_close = '20:00'
+            shop.time_open = '8:00'
+            shop.time_close = '20:00'
             shop.save()
         return Response({'insert': 'shop good'})
