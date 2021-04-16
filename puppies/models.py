@@ -12,8 +12,12 @@ STREETS = (
     'Nugibina-street',
     'Pogodina-street',
     )
+SHOPS = (
+    'Shop-one',
+    'Shop-two',
+    'Shop-three',
+    )
 
-    
 class City(models.Model):
     name = models.CharField(max_length=30)
     
@@ -29,8 +33,16 @@ class Street(models.Model):
 
 class Shops(models.Model):
     name = models.CharField(max_length=30)
-    city = models.ForeignKey(City, on_delete = models.CASCADE)
+    city = models.IntegerField(default=0)
     street = models.ForeignKey(Street, on_delete = models.CASCADE)
     home = models.IntegerField(default=1)
-    date_open = models.DateTimeField(default='8:00')
-    date_close = models.DateTimeField(default='20:00')
+    date_open = models.CharField(max_length=15)
+    date_close = models.CharField(max_length=15)
+
+class Shops_all(models.Model):
+    name = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    street = models.CharField(max_length=30)
+    home = models.IntegerField(default=1)
+    date_open = models.CharField(max_length=15)
+    date_close = models.CharField(max_length=15)

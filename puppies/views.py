@@ -2,8 +2,10 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import City, Street, CITYS, STREETS
-from .serializers import CitySerializer, StreetSerializer
+from .models import City, Street, CITYS, STREETS, SHOPS, Shops
+from .serializers import CitySerializer, StreetSerializer, ShopsSerializer
+from datetime import datetime, date, time
+
 import random
 
 # Create your views here.
@@ -44,8 +46,7 @@ def get_post_citys(request):
 def get_post_street(request):
     # get all street
     if request.method == 'GET':
-        streets = Street.objects.filter(city_id=7)
-        print(streets)
+        streets = Street.objects.filter()
         serializer = StreetSerializer(streets, many=True)
         return Response(serializer.data)
     # insert a new record for a city
@@ -56,4 +57,37 @@ def get_post_street(request):
             street.name = streets
             street.city_id = citys[random.randrange(len(citys))].id
             street.save()
-        return Response({'insert': 'dood'})
+        return Response({'insert': 'good'})
+
+@api_view(['GET', 'POST'])
+def get_post_shop(request):
+    # get all street
+    if request.method == 'GET':
+        shopss = Shops.objects.filter()
+        lis = []
+        for sh in shopss:
+            dic = {}
+            dic['name'] = sh.name
+            #(Street.objects.get(id=sh.street_id)).city_id)
+            dic['city'] = str((City.objects.get(id=sh.street_id)).name)
+            dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
+            dic['home'] = sh.home
+            dic['date_open'] = sh.date_open
+            dic['date_close'] = sh.date_close
+            lis.append(dic)    
+        print(lis)
+        serializer = ShopsSerializer(lis, many=True)
+        return Response(serializer.data)
+    # insert a new record for a city
+    elif request.method == 'POST':
+        streets = Street.objects.all()
+        for shops in SHOPS:
+            shop = Shops()
+            shop.name = shops
+            shop.street_id = streets[random.randrange(len(streets))].city_id
+            shop.city = shop.street_id
+            shop.home = random.randrange(29)
+            shop.date_open = '8:00'
+            shop.date_close = '20:00'
+            shop.save()
+        return Response({'insert': 'shop good'})
