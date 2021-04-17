@@ -7,7 +7,7 @@ from ..serializers import CitySerializer
 
 # initialize the APIClient app
 
-#client = Client()
+client = Client()
 
 class GetAllCityTest(TestCase):
     """ Test module for GET all puppies API """

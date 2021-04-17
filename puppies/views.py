@@ -3,8 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import City, Street, CITYS, STREETS, SHOPS, Shops
+from django.db.models import Q
 from .serializers import CitySerializer, StreetSerializer, ShopsSerializer
 from datetime import datetime, date, time
+import json
 import random
 
 # Create your views here.
@@ -60,7 +62,7 @@ def get_post_citys(request):
 def get_post_street(request):
     # get all street to city. Pos b
     if request.method == 'GET':
-        streets = Street.objects.filter(city_id=1)
+        streets = Street.objects.filter()
         serializer = StreetSerializer(streets, many=True)
         return Response(serializer.data)
     # insert a new record for a street
@@ -73,11 +75,35 @@ def get_post_street(request):
             street.save()
         return Response({'insert': 'good'})
 
+
+
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    # get all shops. not done yet  Pos d
+    # get all shops. done yet  Pos d
+    query = request.GET.get("q")
+    print(query)
+    if query is None:
+        if request.method == 'GET':
+            shopss = Shops.objects.filter()
+            lis = []
+            for sh in shopss:
+                dic = {}
+                dic['name'] = sh.name
+                dic['city'] = str((City.objects.get(id=sh.street_id)).name)
+                dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
+                dic['home'] = sh.home
+                dic['time_open'] = sh.time_open
+                dic['time_close'] = sh.time_close
+                lis.append(dic)    
+            serializer = ShopsSerializer(lis, many=True)
+            return Response(serializer.data)
+    # get shop to value filter. done yet  Pos d           
+    Q_filter = Q()
+    #?q=Shop-five
+    for v in query.split(" "):
+        Q_filter &= Q(name__icontains=v)
     if request.method == 'GET':
-        shopss = Shops.objects.filter()
+        shopss = Shops.objects.filter(Q_filter)
         lis = []
         for sh in shopss:
             dic = {}
@@ -92,6 +118,20 @@ def get_post_shop(request):
         return Response(serializer.data)
     # insert a new record for a shops used JSON not done yet. Pos c
     elif request.method == 'POST':
+        jsonstr = '{"name":"Shop-five","city":3,"street":3,"home":24,"time_open":"8:00","time_close":"20:00"}'
+        sho = json.loads(jsonstr)
+        print(sho)
+        shop = Shops()
+        shop.name = sho['name']
+        shop.street_id = sho['city']
+        shop.city = sho['street']
+        shop.home = sho['home']
+        shop.time_open = sho['time_open']
+        shop.time_close = sho['time_close']
+        shop.save()
+        return Response({'insert': 'shop good'})
+    
+    '''elif request.method == 'POST':
         streets = Street.objects.all()
         for shops in SHOPS:
             shop = Shops()
@@ -102,4 +142,4 @@ def get_post_shop(request):
             shop.time_open = '8:00'
             shop.time_close = '20:00'
             shop.save()
-        return Response({'insert': 'shop good'})
+        return Response({'insert': 'shop good'})'''
