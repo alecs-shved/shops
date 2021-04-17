@@ -1,24 +1,38 @@
-from django.shortcuts import render
+#from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import City, Street, CITYS, STREETS, SHOPS, Shops
 from .serializers import CitySerializer, StreetSerializer, ShopsSerializer
 from datetime import datetime, date, time
-
 import random
 
 # Create your views here.
+
 @api_view(['GET', 'DELETE', 'PUT'])
 def get_delete_update_city(request, pk):
+    print('shved')
     try:
         city = City.objects.get(pk=pk)
     except City.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # get details of a single puppy
+        #return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response('HTTP_400_NOT_FOUND')
+    # get details of a single shops
     if request.method == 'GET':
-        return Response({'get':'well'})
+        shopss = Shops.objects.filter()
+        lis = []
+        for sh in shopss:
+            dic = {}
+            dic['name'] = sh.name
+            dic['city'] = str((City.objects.get(id=sh.street_id)).name)
+            dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
+            dic['home'] = sh.home
+            dic['time_open'] = sh.time_open
+            dic['time_close'] = sh.time_close
+            lis.append(dic)    
+        serializer = ShopsSerializer(lis[pk-1], many=False)
+        return Response(serializer.data)
+        #return Response({'get':'well'})
     # delete a single puppy
     elif request.method == 'DELETE':
         return Response({'del':'well'})
@@ -26,10 +40,10 @@ def get_delete_update_city(request, pk):
     elif request.method == 'PUT':
         return Response({'put':'well'})
 
-
 @api_view(['GET', 'POST'])
 def get_post_citys(request):
-    # get all city
+    # get all city. Pos a
+    print(request)
     if request.method == 'GET':
         citys = City.objects.all()
         serializer = CitySerializer(citys, many=True)
@@ -44,12 +58,12 @@ def get_post_citys(request):
 
 @api_view(['GET', 'POST'])
 def get_post_street(request):
-    # get all street
+    # get all street to city. Pos b
     if request.method == 'GET':
-        streets = Street.objects.filter()
+        streets = Street.objects.filter(city_id=1)
         serializer = StreetSerializer(streets, many=True)
         return Response(serializer.data)
-    # insert a new record for a city
+    # insert a new record for a street
     elif request.method == 'POST':
         citys = City.objects.all()
         for streets in STREETS:
@@ -61,7 +75,7 @@ def get_post_street(request):
 
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    # get all street
+    # get all shops. not done yet  Pos d
     if request.method == 'GET':
         shopss = Shops.objects.filter()
         lis = []
@@ -74,10 +88,9 @@ def get_post_shop(request):
             dic['time_open'] = sh.time_open
             dic['time_close'] = sh.time_close
             lis.append(dic)    
-        #print(lis)
         serializer = ShopsSerializer(lis, many=True)
         return Response(serializer.data)
-    # insert a new record for a city
+    # insert a new record for a shops used JSON not done yet. Pos c
     elif request.method == 'POST':
         streets = Street.objects.all()
         for shops in SHOPS:

@@ -18,7 +18,8 @@ urlpatterns = [
         name='get_post_street'
     ),
     path(
-        'city/(?<pk>[0-9]+)',
+        #'city/(?P<pk>[0-9]+)',
+        'city/<int:pk>',
         views.get_delete_update_city,
         name='get_delete_update_city'
     ),
