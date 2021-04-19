@@ -4,7 +4,6 @@ from ..models import City, Street, Shops
 
 class CityTest(TestCase):
     """ Test module for City model """
-
     def setUp(self):
         City.objects.create(
             name='Kap',)

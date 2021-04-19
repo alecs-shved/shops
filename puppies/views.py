@@ -11,7 +11,69 @@ import random
 
 # Create your views here.
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['GET', 'POST'])
+def get_post_citys(request):
+    query = request.GET.get("q")
+    # get all city. Pos a
+    #curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
+    if request.method == 'GET':
+        citys = City.objects.filter(name='Kupustin-Yar')
+        serializer = CitySerializer(citys, many=True)
+        return Response(serializer.data)
+    # insert a new record for a city
+    #curl  -v -X POST --data '{"name": "Kupustin-Yar"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
+    elif request.method == 'POST':
+        data = {
+           'name': request.data.get('name')
+        }
+        serializer = CitySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+'''@api_view(['GET', 'POST'])
+def get_post_shop(request):
+    # get all shops. done yet  Pos d
+    query = request.GET.get("q")
+    print(query)
+    if query is None:
+        if request.method == 'GET':
+            shopss = Shops.objects.filter()
+            lis = []
+            for sh in shopss:
+                dic = {}
+                dic['name'] = sh.name
+                dic['city'] = str((City.objects.get(id=sh.street_id)).name)
+                dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
+                dic['home'] = sh.home
+                dic['time_open'] = sh.time_open
+                dic['time_close'] = sh.time_close
+                lis.append(dic)    
+            serializer = ShopsSerializer(lis, many=True)
+            return Response(serializer.data)
+    # get shop to value filter. done yet  Pos d           
+    Q_filter = Q()
+    #?q=Shop-five
+    Q_filter = Q(name__icontains=query)
+    if request.method == 'GET':
+        shopss = Shops.objects.filter(Q_filter)
+        lis = []
+        for sh in shopss:
+            dic = {}
+            dic['name'] = sh.name
+            dic['city'] = str((City.objects.get(id=sh.street_id)).name)
+            dic['street'] = str((Street.objects.get(id=sh.street_id)).name)
+            dic['home'] = sh.home
+            dic['time_open'] = sh.time_open
+            dic['time_close'] = sh.time_close
+            lis.append(dic)    
+        serializer = ShopsSerializer(lis, many=True)
+        return Response(serializer.data) '''       
+
+'''@api_view(['GET', 'DELETE', 'PUT'])
 def get_delete_update_city(request, pk):
     print('shved')
     try:
@@ -42,21 +104,6 @@ def get_delete_update_city(request, pk):
     elif request.method == 'PUT':
         return Response({'put':'well'})
 
-@api_view(['GET', 'POST'])
-def get_post_citys(request):
-    # get all city. Pos a
-    print(request)
-    if request.method == 'GET':
-        citys = City.objects.all()
-        serializer = CitySerializer(citys, many=True)
-        return Response(serializer.data)
-    # insert a new record for a city
-    elif request.method == 'POST':
-        for cit in CITYS:
-            city = City()
-            city.name = cit
-            city.save()
-        return Response({'insert':'good'})
 
 @api_view(['GET', 'POST'])
 def get_post_street(request):
@@ -131,7 +178,7 @@ def get_post_shop(request):
         shop.save()
         return Response({'insert': 'shop good'})
     
-    '''elif request.method == 'POST':
+    elif request.method == 'POST':
         streets = Street.objects.all()
         for shops in SHOPS:
             shop = Shops()

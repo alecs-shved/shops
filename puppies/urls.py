@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path(
         'city/',
@@ -8,7 +9,35 @@ urlpatterns = [
         name='get_post_citys'
     ),
     path(
+        'city/<str:city_type>',
+        views.get_post_citys,
+        name='get_post_cityss'
+    ),
+    #path(
+    #    'shop/<str:city_type>',
+    #    views.get_post_shop,
+    #    name='get_post_shop'
+    #),
+    #path(
+    #    'shop/',
+    #    views.get_post_shop,
+    #   name='get_post_shop'
+    #),
+   ]
+
+'''urlpatterns = [
+    path(
+        'city/',
+        views.get_post_citys,
+        name='get_post_citys'
+    ),
+    path(
         'shop/',
+        views.get_post_shop,
+        name='get_post_shop'
+    ),
+    path(
+        'shop/<int:pk>',
         views.get_post_shop,
         name='get_post_shop'
     ),
@@ -23,4 +52,4 @@ urlpatterns = [
         views.get_delete_update_city,
         name='get_delete_update_city'
     ),
-]
+]'''

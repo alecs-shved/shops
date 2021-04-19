@@ -31,6 +31,9 @@ class Street(models.Model):
     name = models.CharField(max_length=30)
     city = models.ForeignKey(City, on_delete = models.CASCADE)
 
+    def __str__(self):
+        return f"{self.name}"
+
 class Shops(models.Model):
     name = models.CharField(max_length=30)
     city = models.IntegerField(default=0)
