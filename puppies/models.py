@@ -19,7 +19,10 @@ SHOPS = (
     )
 
 class City(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
+
+    def __str__(self):
+       return self.name
     
     def get_breed(self):
         return self.name + ' belongs to '
@@ -32,7 +35,13 @@ class Street(models.Model):
     city = models.ForeignKey(City, on_delete = models.CASCADE)
 
     def __str__(self):
-        return f"{self.name}"
+       return self.name
+
+    def get_breed(self):
+        return self.name + ' belongs to '
+
+    def __repr__(self):
+        return self.name + ' is added.'
 
 class Shops(models.Model):
     name = models.CharField(max_length=30)

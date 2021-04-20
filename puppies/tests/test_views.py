@@ -22,18 +22,14 @@ class GetAllCityTest(TestCase):
         # get data from db
         citys = City.objects.filter(name='Kupustin-Yar')
         serializer = CitySerializer(citys, many=True)
-        print(citys)
-        print(response.data)
-        print(serializer.data)
-        print(response.status_code)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-'''class CreateNewCityTest(TestCase):
-    """ Test module for inserting a new puppy """
+class CreateNewCityTest(TestCase):
+    """ Test module for inserting a new city """
     def setUp(self):
         self.valid_payload = {
-            'name': 'Muffin',
+            'name': 'Kupustin-Yar',
         }
         self.invalid_payload = {
             'name': '',
@@ -51,7 +47,7 @@ class GetAllCityTest(TestCase):
             data=json.dumps(self.invalid_payload),
             content_type='application/json'
         )
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)'''
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 '''class GetAllStreetTest(TestCase):
