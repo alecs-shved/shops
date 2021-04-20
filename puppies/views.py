@@ -3,21 +3,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import City, Street, CITYS, STREETS, SHOPS, Shops
-from django.db.models import Q
 from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer
 from datetime import datetime, date, time
-from django.db.models import Avg
-from django.db.models import Count
 import json
-#from datetime import datetime
-import time
-import random
 
 # Create your views here.
 
 @api_view(['GET', 'POST'])
 def get_post_citys(request):
-    #query = request.GET.get("q")
     # get all city. Pos a
     #curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
     if request.method == 'GET':
@@ -29,7 +22,7 @@ def get_post_citys(request):
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name')
-        }
+            }
         serializer = CitySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -101,7 +94,7 @@ def get_post_shop(request):
         serializer = ShopsallSerializer(lis, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"shop-six","city":2, "street":2, "home":14, "time_open":"8:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    #curl  -v -X POST --data '{"name":"shop-six","city":2, "street":2, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
