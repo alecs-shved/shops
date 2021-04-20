@@ -22,4 +22,4 @@ class ShopsSerializer(serializers.ModelSerializer):
 class ShopsallSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shops_all
-        fields = ('id', 'name','city','street','home','time_open','time_close')
+        fields = ('id', 'name','city','street','home','time_open','time_close','open')

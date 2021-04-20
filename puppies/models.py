@@ -58,3 +58,4 @@ class Shops_all(models.Model):
     home = models.IntegerField(default=1)
     time_open = models.CharField(max_length=15)
     time_close = models.CharField(max_length=15)
+    open = models.IntegerField(default=0)

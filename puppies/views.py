@@ -9,6 +9,8 @@ from datetime import datetime, date, time
 from django.db.models import Avg
 from django.db.models import Count
 import json
+#from datetime import datetime
+import time
 import random
 
 # Create your views here.
@@ -87,11 +89,19 @@ def get_post_shop(request):
             dic['home'] = sh.home
             dic['time_open'] = sh.time_open
             dic['time_close'] = sh.time_close
+            now = datetime.now()
+            d = date.today()
+            open = datetime.strptime(str(d) + ' ' + sh.time_open, "%Y-%m-%d %H:%M")
+            close = datetime.strptime(str(d) + ' ' + sh.time_close, "%Y-%m-%d %H:%M")
+            if now > open and now < close:
+                dic['open'] = 1
+            else:
+                dic['open'] = 0
             lis.append(dic)
         serializer = ShopsallSerializer(lis, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"shop-six","city":3, "street":3, "home":14, "time_open":"8:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    #curl  -v -X POST --data '{"name":"shop-six","city":2, "street":2, "home":14, "time_open":"8:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
