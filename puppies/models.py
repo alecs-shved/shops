@@ -2,22 +2,6 @@ from django.db import models
 
 # Create your models here.
 
-CITYS = (
-    'Roston-on-Don',
-    'Volgograd',
-    'Tumbov',
-    )
-STREETS = (
-    'Sudovaya-street',
-    'Nugibina-street',
-    'Pogodina-street',
-    )
-SHOPS = (
-    'Shop-one',
-    'Shop-two',
-    'Shop-three',
-    )
-
 class City(models.Model):
     name = models.CharField(max_length=30, unique=True)
 

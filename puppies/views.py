@@ -2,7 +2,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import City, Street, CITYS, STREETS, SHOPS, Shops
+from .models import City, Street, Shops
 from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer
 from datetime import datetime, date, time
 import json
