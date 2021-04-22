@@ -34,16 +34,18 @@ class Shops(models.Model):
     home = models.IntegerField(default=1)
     time_open = models.CharField(max_length=15)
     time_close = models.CharField(max_length=15)
+    
+    @property
+    def city_name(self):
+        return self.city.name
+
+    @property
+    def street_name(self):
+        return self.street.name
+
+    @property
+    def open(self):
+        return 0
 
     class Meta:
         unique_together = ('name', 'city', 'street')
-
-class Shops_all(models.Model):
-    name = models.CharField(max_length=30)
-    city = models.CharField(max_length=30)
-    street = models.CharField(max_length=30)
-    home = models.IntegerField(default=1)
-    time_open = models.CharField(max_length=15)
-    time_close = models.CharField(max_length=15)
-    open = models.IntegerField(default=0)
-

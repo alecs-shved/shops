@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.db import models
-from .models import City, Street, Shops, Shops_all
+from .models import City, Street, Shops
 
 
 
@@ -20,6 +20,8 @@ class ShopsSerializer(serializers.ModelSerializer):
         fields = ('id', 'name','city','street','home','time_open','time_close')
 
 class ShopsallSerializer(serializers.ModelSerializer):
+    city_name = serializers.ReadOnlyField(source='city.name')
+    street_name = serializers.ReadOnlyField(source='street.name')
     class Meta:
-        model = Shops_all
-        fields = ('id', 'name','city','street','home','time_open','time_close','open')
+        model = Shops
+        fields = ('id', 'name','city_name','street_name','home','time_open','time_close','open')
