@@ -8,9 +8,9 @@
 Подготовка выполняем:
 $ pip install pipenv
 
-$ mkdir firecode-test-django
+$ mkdir django-puppy-store
 
-$ cd firecode-test-django
+$ cd django-puppy-store
 
 $ pipenv --python 3.6
 
@@ -18,11 +18,11 @@ $ pipenv shell
 
 $ pipenv install django==2.1.7
 
-$ django-admin startproject test_shops
+$ django-admin startproject puppies
 
-$ cd test_shops
+$ cd puppy_store
 
-$ python manage.py startapp shops
+$ python manage.py startapp puppies
 
 $ pipenv install djangorestframework==3.9.2
 
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'shops',
+    'puppies',
     'rest_framework'
 ]
 
