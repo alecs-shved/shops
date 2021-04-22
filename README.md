@@ -6,11 +6,15 @@
 
 
 Подготовка выполняем:
+
+```
 $ pip install pipenv
 
 $ mkdir django-puppy-store
 
 $ cd django-puppy-store
+
+$ git clone https://github.com/alecs-shved/shops
 
 $ pipenv --python 3.6
 
@@ -26,17 +30,7 @@ $ python manage.py startapp puppies
 
 $ pipenv install djangorestframework==3.9.2
 
-add in settings.py
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'puppies',
-    'rest_framework'
-]
+```
 
 insert in settings.py
 REST_FRAMEWORK = {
@@ -77,13 +71,14 @@ Make sure you have Python 3.7:
 $ python3 --version
 Python 3.7.3
 ```
-
+```
 $ pipenv install psycopg2==2.7.7
 
 
 $ python3 manage.py runserver
+```
 
-new terminal
+
 
 Проверяем работу экшонов по тестовому заданию
 
@@ -92,7 +87,7 @@ $ curl  -v -X POST --data '{"name": "Kupustin-Yar"}' -H "Content-Type: applicati
 
 $ curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
 
-GET /city/street/ — получение всех улиц города;(city_id —
+b. GET /city/street/ — получение всех улиц города;(city_id —
 идентификатор города)
 $ curl  -v -X POST --data '{"name":"Malina-street","city":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
 
