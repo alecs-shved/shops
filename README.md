@@ -62,7 +62,7 @@ change in settings.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fire-shops',
+        'NAME': 'shops',
         'USER': 'alecsander',
         'PASSWORD': '2',
         'HOST': '127.0.0.1',
@@ -100,7 +100,7 @@ $ curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/cit
 
 c. POST /shop/ — создание магазина; Данный метод получает json c
 объектом магазина, в ответ возвращает id созданной записи.
-$ curl  -v -X POST --data '{"name":"shop-six","city":2, "street":2, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+$ curl  -v -X POST --data '{"name":"shop-six","city":1, "street":1, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
 
 d. GET /shop/?street=&city=&open=0/1 — получение списка магазинов;
 i.

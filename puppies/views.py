@@ -34,11 +34,11 @@ def get_post_street(request):
     # get all street to city. Pos b
     # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
     if request.method == 'GET':
-        streets = Street.objects.filter(city_id=2)
+        streets = Street.objects.filter()
         serializer = StreetSerializer(streets, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"Malina-street","city":3}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
+    #curl  -v -X POST --data '{"name":"Malina-street","city":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
@@ -55,7 +55,9 @@ def get_post_street(request):
 def get_post_shop(request):
     # get all street to city. Pos c
     # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
-    # curl  -v -X GET --data '{"name":"shop-six", "city": "Volgograd", "street":"Sudovaya-street"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    # curl  -v -X GET --data '{"name":"shop-six","city":"Kupustin-Yar","street":"Malina-street"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    # curl  -v -X GET --data '{"name":"shop-six","city":"Kupustin-Yar","street":"Malina-street"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+
     if request.method == 'GET':
         data = {
            'name': request.data.get('name'),
@@ -63,21 +65,22 @@ def get_post_shop(request):
            'street': request.data.get('street'),
         }
         if data['city'] is not None:
-            city = City.objects.filter(name=data['city']).values()
-            data['city'] = city[0]['id']
-            if data['street'] is not None:
-                data['street'] = city[0]['id']
+            city = (City.objects.get(name=data['city'])).id
+            data['city'] = city
+        if data['street'] is not None:
+                street = (Street.objects.get(name=data['street'])).id
+                data['street'] = street
         datar = {}
         for dt in data:
             if data[dt] is not None:
-                 datar[dt] = data[dt]     
+                 datar[dt] = data[dt]        
         shop = Shops.objects.filter(**datar)
         lis = []
         for sh in shop:
             dic = {}
             dic['id'] = sh.id
             dic['name'] = sh.name
-            dic['city'] = City.objects.get(id=sh.street_id)
+            dic['city'] = City.objects.get(id=Street.objects.get(id=sh.street_id).city_id)
             dic['street'] = Street.objects.get(id=sh.street_id)
             dic['home'] = sh.home
             dic['time_open'] = sh.time_open
@@ -94,7 +97,7 @@ def get_post_shop(request):
         serializer = ShopsallSerializer(lis, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"shop-six","city":2, "street":2, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    #curl  -v -X POST --data '{"name":"shop-six","city":1, "street":1, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
