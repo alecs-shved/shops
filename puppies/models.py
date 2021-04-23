@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime, date, time
 
 # Create your models here.
 
@@ -34,19 +35,19 @@ class Shops(models.Model):
     home = models.IntegerField(default=1)
     time_open = models.CharField(max_length=15)
     time_close = models.CharField(max_length=15)
-    
-    #@property
-    #def city_name(self):
-    #    cit = self.street.city_id
-    #    return cit.city_id
-
-    #@property
-    #def street_name(self):
-     #   return self.street.name
 
     @property
     def open(self):
-        return 0
+        dic = {}
+        now = datetime.now()
+        d = date.today()
+        open = datetime.strptime(str(d) + ' ' + self.time_open, "%Y-%m-%d %H:%M")
+        close = datetime.strptime(str(d) + ' ' + self.time_close, "%Y-%m-%d %H:%M")
+        if now > open and now < close:
+            dic['open'] = 1
+        else:
+            dic['open'] = 0
+        return dic['open']
 
     class Meta:
         unique_together = ('name', 'city', 'street')
