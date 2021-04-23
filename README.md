@@ -10,9 +10,11 @@
 ```
 $ pip install pipenv
 
-$ mkdir django-puppy-store
+$ mkdir django-firecode
 
-$ cd django-puppy-store
+$ cd django-firecode
+
+$ git init
 
 $ git clone https://github.com/alecs-shved/shops
 
