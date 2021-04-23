@@ -15,10 +15,10 @@ urlpatterns = [
     ),
     path(
         'shop/',
-        views.get_post_shopz,
-        name='get_post_shopz'
+        views.get_post_shop,
+        name='get_post_shop'
     ),
-    path('shop/<str:street_type>', 
+    path('shop/<str:city_type>', 
           views.get_post_shopz, 
           name='get_post_shopz'),
    ]

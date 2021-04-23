@@ -63,40 +63,15 @@ def get_post_shop(request):
            'city': request.data.get('city'),
            'street': request.data.get('street'),
         }
-        if data['city'] is not None:
-            city = (City.objects.get(name=data['city'])).id
-            data['city'] = city
-        if data['street'] is not None:
-                street = (Street.objects.get(name=data['street'])).id
-                data['street'] = street
         datar = {}
         for dt in data:
             if data[dt] is not None:
                  datar[dt] = data[dt]        
         shop = Shops.objects.filter(**datar)
-        lis = []
-        for sh in shop:
-            dic = {}
-            dic['id'] = sh.id
-            dic['name'] = sh.name
-            dic['city'] = City.objects.get(id=Street.objects.get(id=sh.street_id).city_id)
-            dic['street'] = Street.objects.get(id=sh.street_id)
-            dic['home'] = sh.home
-            dic['time_open'] = sh.time_open
-            dic['time_close'] = sh.time_close
-            now = datetime.now()
-            d = date.today()
-            open = datetime.strptime(str(d) + ' ' + sh.time_open, "%Y-%m-%d %H:%M")
-            close = datetime.strptime(str(d) + ' ' + sh.time_close, "%Y-%m-%d %H:%M")
-            if now > open and now < close:
-                dic['open'] = 1
-            else:
-                dic['open'] = 0
-            lis.append(dic)
-        serializer = ShopsallSerializer(lis, many=True)
+        serializer = ShopsallSerializer(shop, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"shop-six","city":1, "street":1, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
@@ -126,5 +101,6 @@ def get_post_shopz(request):
     shops = Shops.objects.all()
     shops = shops.filter(Q_filter)
     serializer = ShopsallSerializer(shops, many=True)
+    print('shved')
     return Response(serializer.data)
      

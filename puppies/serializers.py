@@ -24,4 +24,4 @@ class ShopsallSerializer(serializers.ModelSerializer):
     street_name = serializers.ReadOnlyField(source='street.name')
     class Meta:
         model = Shops
-        fields = ('id', 'name','city_name','street_name','home','time_open','time_close','open')
+        fields = ('id', 'name', 'city_name', 'street_name','home','time_open','time_close','open')

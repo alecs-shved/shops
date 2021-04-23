@@ -109,7 +109,7 @@ ii.
 iii. Параметр open: 0 - закрыт, 1 - открыт. Данный статус
 определяется исходя из параметров «Время открытия»,
 «Время закрытия» и текущего времени сервера.
-$ curl  -v -X GET --data '{"name":"shop-six", "city": "Kupustin-Yar", "street":"Malina-street"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+$ curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six
 
 
 
