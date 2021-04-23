@@ -53,21 +53,21 @@ def get_post_street(request):
  
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    print('inna')
     # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six
     query = request.GET.get("q")
-    print(query)
     if request.method == 'GET':
         if query is None: 
             shops = Shops.objects.all()  
             serializer = ShopsallSerializer(shops, many=True)
             return Response(serializer.data)
-        Q_filter = Q()
-        for v in query.split(" "):
-            Q_filter &= Q(name__icontains=v)
-        print(Q_filter)
-        shops = Shops.objects.all()
-        shops = shops.filter(Q_filter)
+        dac = {}
+        sp = ['name','city__name','street__name']
+        i = 0
+        print(query.split("%"))
+        for v in query.split("%"):
+            dac[sp[i]] = v
+            i = i + 1
+        shops = Shops.objects.all().filter(**dac)
         serializer = ShopsallSerializer(shops, many=True)
         return Response(serializer.data)
     #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
