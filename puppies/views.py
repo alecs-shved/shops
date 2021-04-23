@@ -2,6 +2,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Q
 from .models import City, Street, Shops
 from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer
 from datetime import datetime, date, time
@@ -110,3 +111,20 @@ def get_post_shop(request):
             serializer.save()
             return Response(serializer.data['id'], status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+def get_post_shopz(request):
+    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six
+    query = request.GET.get("q")
+    if request.method == 'GET':
+        if query is None:   
+            serializer = StreetSerializer([], many=True)
+            return Response(serializer.data)
+    Q_filter = Q()
+    for v in query.split(" "):
+        Q_filter &= Q(name__icontains=v)
+    shops = Shops.objects.all()
+    shops = shops.filter(Q_filter)
+    serializer = ShopsallSerializer(shops, many=True)
+    return Response(serializer.data)
+     

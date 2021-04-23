@@ -15,7 +15,10 @@ urlpatterns = [
     ),
     path(
         'shop/',
-        views.get_post_shop,
-        name='get_post_shop'
+        views.get_post_shopz,
+        name='get_post_shopz'
     ),
+    path('shop/<str:street_type>', 
+          views.get_post_shopz, 
+          name='get_post_shopz'),
    ]
