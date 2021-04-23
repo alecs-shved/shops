@@ -56,18 +56,14 @@ def get_post_street(request):
 def get_post_shop(request):
     # get all street to city. Pos c
     # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
-    # curl  -v -X GET --data '{"name":"shop-six","city":"Kupustin-Yar","street":"Malina-street"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    # curl  -v -X GET --data '{"name":"shop-six","city":1,"street":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     if request.method == 'GET':
         data = {
            'name': request.data.get('name'),
            'city': request.data.get('city'),
            'street': request.data.get('street'),
-        }
-        datar = {}
-        for dt in data:
-            if data[dt] is not None:
-                 datar[dt] = data[dt]        
-        shop = Shops.objects.filter(**datar)
+        }   
+        shop = Shops.objects.filter(**data)
         serializer = ShopsallSerializer(shop, many=True)
         return Response(serializer.data)
     # insert a new record for a street
