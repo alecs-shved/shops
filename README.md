@@ -24,49 +24,25 @@ $ pipenv shell
 
 $ pipenv install django==2.1.7
 
-$ django-admin startproject puppies
-
-$ cd puppy_store
-
-$ python manage.py startapp puppies
+$ cd shops
 
 $ pipenv install djangorestframework==3.9.2
 
+$ pipenv install psycopg2==2.7.7
+
+$ python manage.py startapp shops
+
 ```
-
-insert in settings.py
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [],
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
-}
-
 ### Database
 
-Install **Postregs 12** and make a new database `fire-shops`.
+Install **Postregs 12** and make a new database `shops`.
 
 ```
 $ sudo -i -u postgres
 $ psql
 $ CREATE NEW DATABASE fire-shops WITH OWNER=alecsander
 
-
-
 ```
-change in settings.py
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shops',
-        'USER': 'alecsander',
-        'PASSWORD': '2',
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
-    }
-}
-## Environment
-
 Make sure you have Python 3.7:
 
 ```
@@ -74,13 +50,9 @@ $ python3 --version
 Python 3.7.3
 ```
 ```
-$ pipenv install psycopg2==2.7.7
-
 
 $ python3 manage.py runserver
 ```
-
-
 
 Проверяем работу экшонов по тестовому заданию
 
