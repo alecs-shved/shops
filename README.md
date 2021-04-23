@@ -53,13 +53,19 @@ Python 3.7.3
 
 $ python3 manage.py runserver
 ```
+$ pip install psycopg2-binary
+$ python3 manage.py runserver
+```
+
 
 Проверяем работу по тестовому заданию
 
 a. GET /city/ — получение всех городов из базы;
 $ curl  -v -X POST --data '{"name": "Kupustin-Yar"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
-
 $ curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
+
+
+
 
 b. GET /city/street/ — получение всех улиц города;(city_id —
 идентификатор города)
@@ -67,9 +73,11 @@ $ curl  -v -X POST --data '{"name":"Malina-street","city":1}' -H "Content-Type: 
 
 $ curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
 
+
 c. POST /shop/ — создание магазина; Данный метод получает json c
 объектом магазина, в ответ возвращает id созданной записи.
 $ curl  -v -X POST --data '{"name":"shop-six","city":1, "street":1, "home":14, "time_open":"08:00", "time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+
 
 d. GET /shop/?street=&city=&open=0/1 — получение списка магазинов;
 i.

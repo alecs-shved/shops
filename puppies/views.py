@@ -50,23 +50,26 @@ def get_post_street(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+ 
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    # get all street to city. Pos c
-    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
-    # curl  -v -X GET --data '{"name":"shop-six","city":1,"street":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    print('inna')
+    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six
+    query = request.GET.get("q")
+    print(query)
     if request.method == 'GET':
-        data = {
-           'name': request.data.get('name'),
-           'city': request.data.get('city'),
-           'street': request.data.get('street'),
-        }   
-        shop = Shops.objects.filter(**data)
-        serializer = ShopsallSerializer(shop, many=True)
+        if query is None: 
+            shops = Shops.objects.all()  
+            serializer = ShopsallSerializer(shops, many=True)
+            return Response(serializer.data)
+        Q_filter = Q()
+        for v in query.split(" "):
+            Q_filter &= Q(name__icontains=v)
+        print(Q_filter)
+        shops = Shops.objects.all()
+        shops = shops.filter(Q_filter)
+        serializer = ShopsallSerializer(shops, many=True)
         return Response(serializer.data)
-    # insert a new record for a street
     #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
@@ -82,20 +85,20 @@ def get_post_shop(request):
             serializer.save()
             return Response(serializer.data['id'], status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
-@api_view(['GET', 'POST'])
-def get_post_shopz(request):
-    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six
-    query = request.GET.get("q")
+'''@api_view(['GET', 'POST'])
+def get_post_shop(request):
+    print('shved')
+    # get all street to city. Pos c
+    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
+    # curl  -v -X GET --data '{"name":"shop-six","city":1,"street":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     if request.method == 'GET':
-        if query is None:   
-            serializer = StreetSerializer([], many=True)
-            return Response(serializer.data)
-    Q_filter = Q()
-    for v in query.split(" "):
-        Q_filter &= Q(name__icontains=v)
-    shops = Shops.objects.all()
-    shops = shops.filter(Q_filter)
-    serializer = ShopsallSerializer(shops, many=True)
-    return Response(serializer.data)
-     
+        data = {
+           'name': request.data.get('name'),
+           'city': request.data.get('city'),
+           'street': request.data.get('street'),
+        }   
+        shop = Shops.objects.filter(**data)
+        serializer = ShopsallSerializer(shop, many=True)
+        return Response(serializer.data)'''     
