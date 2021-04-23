@@ -40,11 +40,11 @@ Install **Postregs 12** and make a new database `shops`.
 ```
 $ sudo -i -u postgres
 $ psql
-$ CREATE NEW DATABASE fire-shops WITH OWNER=alecsander
+$ createuser --interactive alecsander
+$ createdb -O alecsander shops
 
 ```
-Make sure you have Python 3.7:
-
+Make sure you have Python 3.7 or 3.6:
 ```
 $ python3 --version
 Python 3.7.3
@@ -54,7 +54,7 @@ Python 3.7.3
 $ python3 manage.py runserver
 ```
 
-Проверяем работу экшонов по тестовому заданию
+Проверяем работу по тестовому заданию
 
 a. GET /city/ — получение всех городов из базы;
 $ curl  -v -X POST --data '{"name": "Kupustin-Yar"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
