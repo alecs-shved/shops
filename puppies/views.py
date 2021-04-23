@@ -97,6 +97,5 @@ def get_post_shopz(request):
     shops = Shops.objects.all()
     shops = shops.filter(Q_filter)
     serializer = ShopsallSerializer(shops, many=True)
-    print('shved')
     return Response(serializer.data)
      
