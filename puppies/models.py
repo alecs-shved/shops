@@ -43,10 +43,10 @@ class Shops(models.Model):
         open = datetime.strptime(str(d) + ' ' + self.time_open, "%Y-%m-%d %H:%M")
         close = datetime.strptime(str(d) + ' ' + self.time_close, "%Y-%m-%d %H:%M")
         if now > open and now < close:
-            d = 1
+            x = 1
         else:
-            d = 0
-        return d
+            x = 0
+        return x
 
     class Meta:
         unique_together = ('name', 'city', 'street')
