@@ -60,16 +60,16 @@ def get_post_shop(request):
             shops = Shops.objects.all()  
             serializer = ShopsallSerializer(shops, many=True)
             return Response(serializer.data)
-        dic = {}
+        search_terms = {}
         query_plan = ['name','city__name','street__name', 'open']
         i = 0
         for v in query.split("%"):
-            dic[query_plan[i]] = v
+            search_terms[query_plan[i]] = v
             i = i + 1
         if i == 4:
-            open = int(dic['open'])
-            del dic['open'] 
-        shops = Shops.objects.all().filter(**dic)
+            open = int(search_terms['open'])
+            del search_terms['open'] 
+        shops = Shops.objects.all().filter(**search_terms)
         serializer = ShopsallSerializer(shops, many=True)
         if i == 4:
             serial_data = []
