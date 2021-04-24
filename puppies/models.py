@@ -38,16 +38,15 @@ class Shops(models.Model):
 
     @property
     def open(self):
-        dic = {}
         now = datetime.now()
         d = date.today()
         open = datetime.strptime(str(d) + ' ' + self.time_open, "%Y-%m-%d %H:%M")
         close = datetime.strptime(str(d) + ' ' + self.time_close, "%Y-%m-%d %H:%M")
         if now > open and now < close:
-            dic['open'] = 1
+            d = 1
         else:
-            dic['open'] = 0
-        return dic['open']
+            d = 0
+        return d
 
     class Meta:
         unique_together = ('name', 'city', 'street')

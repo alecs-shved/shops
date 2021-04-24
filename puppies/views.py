@@ -66,12 +66,19 @@ def get_post_shop(request):
         for v in query.split("%"):
             dac[sp[i]] = v
             i = i + 1
-        op = dac['open']
-        del dac['open'] 
+        if i == 4:
+            op = int(dac['open'])
+            del dac['open'] 
         shops = Shops.objects.all().filter(**dac)
         serializer = ShopsallSerializer(shops, many=True)
-        print(serializer.data)
+        if i == 4:
+            sp = []
+            for j in serializer.data:
+                if j['open'] != op:
+                    sp.append(j)
+            return Response(sp)  
         return Response(serializer.data)
+    #?q=shop-six%Kupustin-Yar%Malina-street%0
     #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
