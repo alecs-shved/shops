@@ -15,7 +15,7 @@ def get_post_citys(request):
     # get all city. Pos a
     #curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
     if request.method == 'GET':
-        citys = City.objects.filter(name='Kupustin-Yar')
+        citys = City.objects.filter()
         serializer = CitySerializer(citys, many=True)
         return Response(serializer.data)
     # insert a new record for a city

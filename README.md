@@ -55,6 +55,10 @@ $ python3 manage.py runserver
 ```
 $ pip install psycopg2-binary
 $ python3 manage.py runserver
+
+$ python manage.py test
+
+$ python3 manage.py runserver
 ```
 
 
