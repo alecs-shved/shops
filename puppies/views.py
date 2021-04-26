@@ -1,10 +1,9 @@
-#from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from .models import City, Street, Shops
-from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer
+from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer, Open
 from datetime import datetime, date, time
 import json
 
@@ -13,13 +12,11 @@ import json
 @api_view(['GET', 'POST'])
 def get_post_citys(request):
     # get all city. Pos a
-    #curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
     if request.method == 'GET':
         citys = City.objects.filter()
         serializer = CitySerializer(citys, many=True)
         return Response(serializer.data)
     # insert a new record for a city
-    #curl  -v -X POST --data '{"name": "Kupustin-Yar"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name')
@@ -33,13 +30,11 @@ def get_post_citys(request):
 @api_view(['GET', 'POST'])
 def get_post_street(request):
     # get all street to city. Pos b
-    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
     if request.method == 'GET':
         streets = Street.objects.filter()
         serializer = StreetSerializer(streets, many=True)
         return Response(serializer.data)
     # insert a new record for a street
-    #curl  -v -X POST --data '{"name":"Malina-street","city":1}' -H "Content-Type: application/json"  http://127.0.0.1:8000/city/street/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
@@ -53,7 +48,6 @@ def get_post_street(request):
 
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six%Kupustin-Yar%Malina-street%0
     query = request.GET.get("q")
     if request.method == 'GET':
         if query is None: 
@@ -66,14 +60,16 @@ def get_post_shop(request):
         for v in query.split("%"):
             search_terms[query_plan[i]] = v
             i = i + 1
-        if i == 4:
-            open = int(search_terms['open'])
+        try:
+            Open.open = int(search_terms['open'])
             del search_terms['open'] 
+        except:
+            shops = Shops.objects.all().filter(**search_terms)
+            serializer = ShopsallSerializer(shops, many=True)
+            return Response(serializer.data)
         shops = Shops.objects.all().filter(**search_terms)
         serializer = ShopsallSerializer(shops, many=True)
         return Response(serializer.data)
-    #?q=shop-six%Kupustin-Yar%Malina-street%0
-    #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
     elif request.method == 'POST':
         data = {
            'name': request.data.get('name'),
