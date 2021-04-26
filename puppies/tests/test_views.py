@@ -81,13 +81,12 @@ class GetAllshopsTest(TestCase):
         '/shop/?q=Shop-one',
         '/shop/?q=Shop-one%Kupustin-Yar',
         '/shop/?q=Shop-one%Kupustin-Yar%Malina-street',
-        '/shop/?q=Shop-one%Kupustin-Yar%Malina-street%1']
-        for url in url_list:
-            response = client.get(url)
-            # get data from db
-            print(response.data)
-            shops = Shops.objects.filter()
-            serializer = ShopsallSerializer(shops, many=True)
-            print(serializer.data)
-            self.assertEqual(response.data, serializer.data)
-            self.assertEqual(response.status_code, status.HTTP_200_OK)
+        '/shop/?q=Shop-one%Kupustin-Yar%Malina-street%0']
+        #for url in url_list:
+        response = client.get(url_list[4])
+        # get data from db
+        shops = Shops.objects.filter()
+        serializer = ShopsallSerializer(shops, many=True)
+        print(serializer.data)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

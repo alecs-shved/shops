@@ -50,7 +50,7 @@ def get_post_street(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
- 
+
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
     # curl  -v -X GET -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/?q=shop-six%Kupustin-Yar%Malina-street%0
@@ -71,12 +71,6 @@ def get_post_shop(request):
             del search_terms['open'] 
         shops = Shops.objects.all().filter(**search_terms)
         serializer = ShopsallSerializer(shops, many=True)
-        if i == 4:
-            serial_data = []
-            for j in serializer.data:
-                if j['open'] != open:
-                    serial_data.append(j)
-            return Response(serial_data)  
         return Response(serializer.data)
     #?q=shop-six%Kupustin-Yar%Malina-street%0
     #curl  -v -X POST --data '{"name":"shop-six","city":1,"street":1,"home":14,"time_open":"08:00","time_close":"20:00"}' -H "Content-Type: application/json"  http://127.0.0.1:8000/shop/
