@@ -2,9 +2,6 @@ from rest_framework import serializers
 from django.db import models
 from .models import City, Street, Shops
 
-class Open():
-    open = 0
-
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
@@ -15,10 +12,10 @@ class StreetSerializer(serializers.ModelSerializer):
         model = Street
         fields = ('name','city',)
 
-class ShopsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Shops
-        fields = ('id', 'name','city','street','home','time_open','time_close')
+#class ShopsSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = Shops
+#        fields = ('id', 'name','city','street','home','time_open','time_close')
 
 class ShopsallSerializer(serializers.ModelSerializer):
     city_name = serializers.ReadOnlyField(source='city.name')

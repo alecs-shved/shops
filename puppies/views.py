@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from .models import City, Street, Shops
-from .serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer, Open
+from .serializers import CitySerializer, StreetSerializer, ShopsallSerializer
 from datetime import datetime, date, time
 import json
 

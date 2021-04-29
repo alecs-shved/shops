@@ -4,7 +4,7 @@ from rest_framework import status
 from django.test import TestCase, Client
 from django.urls import reverse
 from ..models import City, Street, Shops
-from ..serializers import CitySerializer, StreetSerializer, ShopsSerializer, ShopsallSerializer 
+from ..serializers import CitySerializer, StreetSerializer, ShopsallSerializer 
 
 # initialize the APIClient app
 
