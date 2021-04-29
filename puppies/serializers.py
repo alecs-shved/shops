@@ -7,15 +7,12 @@ class CitySerializer(serializers.ModelSerializer):
         model = City
         fields = ('name',)
 
+
 class StreetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Street
         fields = ('name','city',)
 
-#class ShopsSerializer(serializers.ModelSerializer):
-#    class Meta:
-#        model = Shops
-#        fields = ('id', 'name','city','street','home','time_open','time_close')
 
 class ShopsallSerializer(serializers.ModelSerializer):
     city_name = serializers.ReadOnlyField(source='city.name')

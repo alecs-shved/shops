@@ -15,6 +15,7 @@ class City(models.Model):
     def __repr__(self):
         return self.name + ' is added.'
 
+
 class Street(models.Model):
     name = models.CharField(max_length=30)
     city = models.ForeignKey(City, on_delete = models.CASCADE)
@@ -27,6 +28,7 @@ class Street(models.Model):
 
     def __repr__(self):
         return self.name + ' is added.'
+
 
 class Shops(models.Model):
     name = models.CharField(max_length=30)

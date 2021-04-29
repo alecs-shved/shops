@@ -17,6 +17,7 @@ class GetAllCityTest(TestCase):
             name='Kupustin-Yar',)
         City.objects.create(
             name='Astrahan',)
+            
     def test_get_post_citys(self):
         # get API response
         response = client.get(reverse('get_post_citys'))
@@ -25,6 +26,7 @@ class GetAllCityTest(TestCase):
         serializer = CitySerializer(citys, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class CreateNewCityTest(TestCase):
     """ Test module for inserting a new city """
@@ -35,6 +37,7 @@ class CreateNewCityTest(TestCase):
         self.invalid_payload = {
             'name': '',
         }
+
     def test_create_valid_city(self):
         response = client.post(
             reverse('get_post_citys'),
@@ -42,6 +45,7 @@ class CreateNewCityTest(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
     def test_create_invalid_city(self):
         response = client.post(
             reverse('get_post_citys'),
@@ -50,6 +54,7 @@ class CreateNewCityTest(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+
 class GetAllstreetTest(TestCase):
     """ Test module for GET all street API """
     def setUp(self):
@@ -57,6 +62,7 @@ class GetAllstreetTest(TestCase):
             name='Kupustin-Yar',)
         idu = City.objects.get(name='Kupustin-Yar').id
         Street.objects.create(name='Malina-street', city_id=idu)
+
     def test_get_post_streets(self):
         # get API response
         response = client.get(reverse('get_post_street'))
@@ -65,6 +71,7 @@ class GetAllstreetTest(TestCase):
         serializer = StreetSerializer(street, many=True)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 class GetAllshopsTest(TestCase):
     """ Test module for GET all shops API """
