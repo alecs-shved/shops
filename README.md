@@ -14,8 +14,6 @@ $ mkdir django-firecode
 
 $ cd django-firecode
 
-$ git init
-
 $ git clone https://github.com/alecs-shved/shops
 
 $ pipenv --python 3.6
@@ -49,9 +47,7 @@ Make sure you have Python 3.7 or 3.6:
 $ python3 --version
 Python 3.7.3
 ```
-```
 
-$ python3 manage.py runserver
 ```
 $ pip install psycopg2-binary
 $ python3 manage.py runserver
