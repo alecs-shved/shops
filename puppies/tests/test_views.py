@@ -77,18 +77,12 @@ class GetAllshopsTest(TestCase):
         
     def test_get_post_shops(self):
         # get API response
-        url_list = ['/shop/',
-        '/shop/?q=Shop-one',
-        '/shop/?q=Shop-one%Kupustin-Yar',
-        '/shop/?q=Shop-one%Kupustin-Yar%Malina-street',
+        # get data from db
+        url_list = [
         '/shop/?street=Malina-street&city=Kupustin-Yar&open=1'
         ]
-        #for url in url_list:
-        response = client.get(url_list[4])
-        # get data from db
+        response = client.get(url_list[0])
         shops = filter(lambda x: x.open == True, Shops.objects.filter(city__name="Kupustin-Yar", street__name="Malina-street"))
         serializer = ShopsallSerializer(shops, many=True)
-        print(response.data)
-        print(serializer.data)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)

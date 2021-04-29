@@ -52,8 +52,6 @@ def get_post_shop(request):
     search_terms['street__name'] = request.GET.get('street')
     search_terms['city__name'] = request.GET.get('city')
     op = request.GET.get("open")
-    print(search_terms)
-    print(op)
     if op == 1:
         ope = True
     else:
@@ -64,7 +62,6 @@ def get_post_shop(request):
         else:
             shops = filter(lambda x: x.open != ope, Shops.objects.filter(**search_terms))
         serializer = ShopsallSerializer(shops, many=True)
-        print(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
         data = {
