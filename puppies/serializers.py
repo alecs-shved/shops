@@ -27,9 +27,3 @@ class ShopsallSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shops
         fields = ('id', 'name', 'city_name', 'street_name','home','time_open','time_close','open')
-
-    def to_representation(self, instance):
-        data = super(ShopsallSerializer, self).to_representation(instance)
-        if data.get('open') == Open.open:
-            return None
-        return data

@@ -29,7 +29,7 @@ class Street(models.Model):
         return self.name + ' is added.'
 
 class Shops(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30)
     city = models.ForeignKey(City, on_delete = models.CASCADE)
     street = models.ForeignKey(Street, on_delete = models.CASCADE)
     home = models.IntegerField(default=1)
@@ -42,11 +42,7 @@ class Shops(models.Model):
         d = date.today()
         open = datetime.strptime(str(d) + ' ' + self.time_open, "%Y-%m-%d %H:%M")
         close = datetime.strptime(str(d) + ' ' + self.time_close, "%Y-%m-%d %H:%M")
-        if now > open and now < close:
-            x = 1
-        else:
-            x = 0
-        return x
+        return now > open and now < close
 
     class Meta:
         unique_together = ('name', 'city', 'street')

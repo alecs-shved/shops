@@ -48,27 +48,23 @@ def get_post_street(request):
 
 @api_view(['GET', 'POST'])
 def get_post_shop(request):
-    query = request.GET.get("q")
+    search_terms = {}
+    search_terms['street__name'] = request.GET.get('street')
+    search_terms['city__name'] = request.GET.get('city')
+    op = request.GET.get("open")
+    print(search_terms)
+    print(op)
+    if op == 1:
+        ope = True
+    else:
+        ope = False
     if request.method == 'GET':
-        if query is None: 
-            shops = Shops.objects.all()  
-            serializer = ShopsallSerializer(shops, many=True)
-            return Response(serializer.data)
-        search_terms = {}
-        query_plan = ['name','city__name','street__name', 'open']
-        i = 0
-        for v in query.split("%"):
-            search_terms[query_plan[i]] = v
-            i = i + 1
-        try:
-            Open.open = int(search_terms['open'])
-            del search_terms['open'] 
-        except:
-            shops = Shops.objects.all().filter(**search_terms)
-            serializer = ShopsallSerializer(shops, many=True)
-            return Response(serializer.data)
-        shops = Shops.objects.all().filter(**search_terms)
+        if op is None: 
+            shops = Shops.objects.filter(**search_terms)
+        else:
+            shops = filter(lambda x: x.open != ope, Shops.objects.filter(**search_terms))
         serializer = ShopsallSerializer(shops, many=True)
+        print(serializer.data)
         return Response(serializer.data)
     elif request.method == 'POST':
         data = {
