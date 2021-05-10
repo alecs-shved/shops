@@ -1,0 +1,7 @@
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 30, 2021 - 13:08:33
+Django version 2.1.7, using settings 'shop_store.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.

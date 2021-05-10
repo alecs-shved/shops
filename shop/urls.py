@@ -18,4 +18,9 @@ urlpatterns = [
         views.get_post_shop,
         name='get_post_shop'
     ),
+    path(
+        'shved/',
+        views.get_post_shved,
+        name='get_post_shved'
+    ),
    ]

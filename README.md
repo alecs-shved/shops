@@ -14,8 +14,6 @@ $ mkdir django-firecode
 
 $ cd django-firecode
 
-$ git init
-
 $ git clone https://github.com/alecs-shved/shops
 
 $ pipenv --python 3.6

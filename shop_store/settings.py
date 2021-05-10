@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'puppies',
+    'shop',
     'rest_framework',
 ]
 
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'puppy_store.urls'
+ROOT_URLCONF = 'shop_store.urls'
 
 TEMPLATES = [
     {
@@ -76,13 +76,13 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'puppy_store.wsgi.application'
+WSGI_APPLICATION = 'shop_store.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
    'NAME': 'shops',
@@ -91,7 +91,7 @@ DATABASES = {
    'HOST' : '127.0.0.1',
    'PORT' : '5432', 
    }
-}
+}'''
 
 
 # Password validation
