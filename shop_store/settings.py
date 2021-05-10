@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'shop_store.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
+# shved
 '''DATABASES = {
    'default': {
    'ENGINE': 'django.db.backends.postgresql_psycopg2',
